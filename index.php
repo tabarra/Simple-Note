@@ -122,9 +122,11 @@ if (!empty($_GET['dl'])) {
         .container {
             max-width: 680px;
         }
-
         textarea {
             resize: vertical;    /* allow only vertical stretch */
+        }
+        #big-editor{
+            min-height: 40vh;
         }
     </style>
 
@@ -201,13 +203,13 @@ if (!empty($_GET['dl'])) {
                                         <input class="form-control" type="text" placeholder="Title" name="title" value="<?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>">
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="5" placeholder="What do you have in mind ?" name="content" required><?= htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
+                                        <textarea class="form-control" id="big-editor" rows="8" placeholder="What do you have in mind ?" name="content" required><?= htmlspecialchars($row['content'], ENT_QUOTES, 'UTF-8') ?></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <input type="hidden" name="id" value="<?= $row['ID'] ?>">
                                     <div class="btn-group pull-right">
-                                        <button class="btn btn-success" name="edit" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
+                                        <button class="btn btn-disabled" name="edit" id="saveBtn" type="submit" disabled><span class="glyphicon glyphicon-floppy-disk"></span> Save </button>
                                     </div>
                                 </div>
                                 </form>
@@ -227,6 +229,11 @@ if (!empty($_GET['dl'])) {
                 window.location = '?del='+id;
             }
         }
+        $('#big-editor').keyup(function(){
+            $('#saveBtn').prop('disabled', false);
+            $('#saveBtn').removeClass('btn-disabled');
+            $('#saveBtn').addClass('btn-success');
+        });
     </script>
 
 </body>
